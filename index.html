@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="app">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Exibe-se Expression Builder</title>
+
+        <link href="css/bootstrap.min.css" rel="stylesheet">
+        <link href="css/styles.css" rel="stylesheet">
+  </head>
+  <body onload="initQuery(query);">
+    <div class="container" ng-controller="QueryBuilderCtrl">
+    <h1>Exibe-se Expression Builder</h1>
+
+        <div class="alert alert-info">
+			<strong>Query</strong><br>
+            <span ng-bind-html="output"></span>
+        </div>
+
+        <query-builder group="filter.group"></query-builder>
+    </div>
+
+    <script type="text/ng-template" id="/queryBuilderDirective.html">
+    <div class="alert alert-warning alert-group">
+        <div class="form-inline">
+            <select ng-options="o.name as o.name for o in operators" ng-model="group.operator" class="form-control input-sm" style="display: none;"></select>
+            <button style="margin-left: 5px" ng-click="addCondition()" class="btn btn-sm btn-success btn-novo-termo linha-0 grupo-0">
+			<span class="glyphicon glyphicon-plus-sign"></span> Novo Termo</button>
+            <button style="margin-left: 5px" ng-click="addGroup()" class="btn btn-sm btn-success btn-novo-grupo linha-0 grupo-0">
+				<span class="glyphicon glyphicon-plus-sign"></span> Novo Grupo</button>
+            <button style="margin-left: 5px" ng-click="removeGroup()" class="btn btn-sm btn-danger">
+			<span class="glyphicon glyphicon-minus-sign"></span> Remover Grupo</button>
+        </div>
+        <div class="group-conditions">
+            <div ng-repeat="rule in group.rules | orderBy:'index'" class="condition">
+                <div ng-switch="rule.hasOwnProperty('group')">
+                    <div ng-switch-when="true">
+                        <query-builder group="rule.group"></query-builder>
+                    </div>
+                    <div ng-switch-default="ng-switch-default">
+                        <div class="form-inline">
+							<span style="margin-right: 115px;">Regra</span>
+							<span style="margin-right: 28px;">Condi&ccedil;&atilde;o Fixa</span>
+							<span style="margin-right: 73px;">Condi&ccedil;&atilde;o Livre</span>
+							<span >Operador</span>
+                        </div>
+                        <div class="form-inline">
+                            <select ng-options="t.name as t.name for t in fields" ng-model="rule.field" class="form-control input-sm regras"></select>
+                            <select style="margin-left: 5px" ng-options="c.name as c.name for c in conditions" ng-model="rule.condition" class="form-control input-sm cond-fixa"></select>
+                            <input style="margin-left: 5px" type="text" ng-model="rule.data" class="form-control input-sm cond-livre"/>
+							<select name="condicao"  ng-model="rule.condicao" class="form-control input-sm operadores">
+							<option value=""></option>
+							<option value="#e#">  E  </option>
+							<option value="#ou#">  OU  </option>
+							</select>
+                            <button style="margin-left: 5px" ng-click="removeCondition($index)" class="btn btn-sm btn-danger"><span class="glyphicon glyphicon-minus-sign"></span></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </script>
+
+    <script src="jquery.js"></script>
+    <script src="angular.min.js"></script>
+    <script src="angular-sanitize.min.js"></script>
+    <script src="exibese-query-builder.js"></script>
+  </body>
+</html>
