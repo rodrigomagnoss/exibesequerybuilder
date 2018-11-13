@@ -8,5 +8,3 @@ ADD index.html /var/www/localhost/htdocs/index.html
 ADD entrypoint.sh /entrypoint.sh
 
 EXPOSE 80
-
-ENTRYPOINT ["/entrypoint.sh"]
