@@ -5,6 +5,6 @@ LABEL Rodrigo Magno Santos Souza <rodrigo.santos@castgroup.com.br> - Cast group 
 run apk add --update darkhttpd && rm -rf /var/cache/apk/*
 
 ADD index.html /var/www/localhost/htdocs/index.html
-ADD entrypoint.sh /entrypoint.sh
+
 
 EXPOSE 80
